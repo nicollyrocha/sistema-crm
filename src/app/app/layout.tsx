@@ -9,13 +9,16 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           Sistema CRM
         </Link>
         <div className="flex items-center gap-4">
+          <Link href="/app/deals" className="text-sm text-muted-foreground hover:text-foreground">
+            Funil
+          </Link>
           <Link href="/account" className="text-sm text-muted-foreground hover:text-foreground">
             Minha conta
           </Link>
           <SignOutButton />
         </div>
       </header>
-      <main className="mx-auto max-w-2xl px-6 py-8">{children}</main>
+      <main className="mx-auto max-w-6xl px-6 py-8">{children}</main>
     </div>
   );
 }
