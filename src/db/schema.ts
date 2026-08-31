@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean, uuid } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, uuid, integer, date } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -62,6 +62,23 @@ export const contact = pgTable("contact", {
   company: text("company"),
   notes: text("notes"),
   status: text("status").notNull().default("lead"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+export const deal = pgTable("deal", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  contactId: uuid("contact_id")
+    .notNull()
+    .references(() => contact.id, { onDelete: "cascade" }),
+  title: text("title").notNull(),
+  value: integer("value"),
+  expectedCloseDate: date("expected_close_date"),
+  notes: text("notes"),
+  stage: text("stage").notNull().default("prospecting"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
