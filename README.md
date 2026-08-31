@@ -13,11 +13,14 @@ construir essas features em seguida.
 
 ## Setup local
 1. `npm install`
-2. Copie `.env.local.example` para `.env.local` e preencha `DATABASE_URL` (connection string do
+2. Crie uma conta e um projeto no [Neon](https://neon.tech) para obter a connection string do
+   Postgres. Uma conta no [Resend](https://resend.com) com uma `RESEND_API_KEY` também é
+   necessária para envio real de email, mas é opcional em desenvolvimento (veja abaixo).
+3. Copie `.env.local.example` para `.env.local` e preencha `DATABASE_URL` (connection string do
    Neon). Gere `BETTER_AUTH_SECRET` com:
    `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
-3. `npx drizzle-kit generate && npx drizzle-kit migrate`
-4. `npm run dev`
+4. `npx drizzle-kit generate && npx drizzle-kit migrate`
+5. `npm run dev`
 
 Sem `RESEND_API_KEY` configurado, os links de recuperação de senha e troca de email são logados
 no console do servidor em vez de enviados por email — copie a URL do terminal para testar esses
@@ -31,6 +34,10 @@ vez de quebrar — configure um Blob store na Vercel para habilitar o upload rea
 2. Configure as variáveis de ambiente no projeto da Vercel: `DATABASE_URL`, `BETTER_AUTH_SECRET`,
    `BETTER_AUTH_URL` (sua URL de produção), `BLOB_READ_WRITE_TOKEN` (criado em Storage > Blob no
    dashboard da Vercel), `RESEND_API_KEY`, `EMAIL_FROM`.
+   > O remetente compartilhado `onboarding@resend.dev` só entrega emails para a caixa de entrada
+   > do próprio dono da conta Resend. Para que usuários reais recebam os links de recuperação de
+   > senha e troca de email em produção, verifique um domínio próprio no Resend e use-o em
+   > `EMAIL_FROM`.
 3. Rode as migrações contra o banco de produção: `npx drizzle-kit migrate` com `DATABASE_URL`
    apontando para a branch de produção do Neon.
 4. Deploy.
