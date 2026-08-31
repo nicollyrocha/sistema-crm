@@ -38,6 +38,7 @@ export const dealInputSchema = z.object({
   value: z.number().int().nonnegative("O valor não pode ser negativo").optional(),
   expectedCloseDate: z
     .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Data inválida")
     .optional()
     .or(z.literal(""))
     .transform((v) => (v ? v : undefined)),

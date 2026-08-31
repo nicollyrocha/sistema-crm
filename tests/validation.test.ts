@@ -94,4 +94,23 @@ describe("dealInputSchema", () => {
     expect(result.success).toBe(true);
     if (result.success) expect(result.data.expectedCloseDate).toBeUndefined();
   });
+
+  it("rejects a malformed expectedCloseDate", () => {
+    const result = dealInputSchema.safeParse({
+      title: "Contrato Acme",
+      contactId: "123e4567-e89b-12d3-a456-426614174000",
+      expectedCloseDate: "not-a-date",
+    });
+    expect(result.success).toBe(false);
+  });
+
+  it("accepts a valid YYYY-MM-DD expectedCloseDate", () => {
+    const result = dealInputSchema.safeParse({
+      title: "Contrato Acme",
+      contactId: "123e4567-e89b-12d3-a456-426614174000",
+      expectedCloseDate: "2026-09-15",
+    });
+    expect(result.success).toBe(true);
+    if (result.success) expect(result.data.expectedCloseDate).toBe("2026-09-15");
+  });
 });
