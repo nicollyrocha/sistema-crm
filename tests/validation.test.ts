@@ -30,6 +30,12 @@ describe("contactInputSchema", () => {
     if (result.success) expect(result.data.email).toBeUndefined();
   });
 
+  it("treats a whitespace-only email as undefined", () => {
+    const result = contactInputSchema.safeParse({ name: "Maria", email: "   " });
+    expect(result.success).toBe(true);
+    if (result.success) expect(result.data.email).toBeUndefined();
+  });
+
   it("rejects an invalid status", () => {
     const result = contactInputSchema.safeParse({ name: "Maria", status: "customer" });
     expect(result.success).toBe(false);

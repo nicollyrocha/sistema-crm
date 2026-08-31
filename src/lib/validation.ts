@@ -2,14 +2,10 @@ import { z } from "zod";
 
 export const contactInputSchema = z.object({
   name: z.string().trim().min(1, "O nome é obrigatório").max(200, "Nome muito longo"),
-  email: z
-    .string()
-    .trim()
-    .email("Email inválido")
-    .max(200)
-    .optional()
-    .or(z.literal(""))
-    .transform((v) => (v ? v : undefined)),
+  email: z.preprocess(
+    (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+    z.string().trim().email("Email inválido").max(200).optional()
+  ),
   phone: z
     .string()
     .trim()
