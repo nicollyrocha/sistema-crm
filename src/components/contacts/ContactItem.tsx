@@ -80,18 +80,18 @@ export function ContactItem({
       className="flex items-start justify-between gap-3 rounded-xl border border-border bg-card p-4"
     >
       <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
-          <p className="font-medium">{contact.name}</p>
-          <span className="rounded-full border border-border px-2 py-0.5 text-xs text-muted-foreground">
+        <div className="flex flex-wrap items-center gap-2">
+          <p className="break-words font-medium">{contact.name}</p>
+          <span className="shrink-0 rounded-full border border-border px-2 py-0.5 text-xs text-muted-foreground">
             {STATUS_LABELS[contact.status] ?? contact.status}
           </span>
         </div>
-        <div className="mt-1 flex flex-col gap-0.5 text-sm text-muted-foreground">
+        <div className="mt-1 flex flex-col gap-0.5 break-words text-sm text-muted-foreground">
           {contact.email && <span>{contact.email}</span>}
           {contact.phone && <span>{contact.phone}</span>}
           {contact.company && <span>{contact.company}</span>}
         </div>
-        {contact.notes && <p className="mt-2 text-sm text-muted-foreground">{contact.notes}</p>}
+        {contact.notes && <p className="mt-2 break-words text-sm text-muted-foreground">{contact.notes}</p>}
         {deleteError && <p className="mt-2 text-sm text-destructive">{deleteError}</p>}
       </div>
       <div className="flex shrink-0 gap-1">
