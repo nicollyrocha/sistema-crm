@@ -31,3 +31,24 @@ export const contactInputSchema = z.object({
 });
 
 export type ContactInput = z.infer<typeof contactInputSchema>;
+
+export const dealInputSchema = z.object({
+  title: z.string().trim().min(1, "O título é obrigatório").max(200, "Título muito longo"),
+  contactId: z.string().uuid("Selecione um contato"),
+  value: z.number().int().nonnegative("O valor não pode ser negativo").optional(),
+  expectedCloseDate: z
+    .string()
+    .optional()
+    .or(z.literal(""))
+    .transform((v) => (v ? v : undefined)),
+  notes: z
+    .string()
+    .trim()
+    .max(2000, "Notas muito longas")
+    .optional()
+    .or(z.literal(""))
+    .transform((v) => (v ? v : undefined)),
+  stage: z.enum(["prospecting", "proposal", "negotiation", "won", "lost"]).default("prospecting"),
+});
+
+export type DealInput = z.infer<typeof dealInputSchema>;
