@@ -29,6 +29,15 @@ describe("parseCurrencyToCents", () => {
   it("returns undefined for non-numeric input", () => {
     expect(parseCurrencyToCents("abc")).toBeUndefined();
   });
+
+  it("parses a US-formatted amount (comma thousands, dot decimal)", () => {
+    expect(parseCurrencyToCents("1,500.00")).toBe(150000);
+  });
+
+  it("parses an amount with multiple thousands groups in either format", () => {
+    expect(parseCurrencyToCents("1,234,567.89")).toBe(123456789);
+    expect(parseCurrencyToCents("1.234.567,89")).toBe(123456789);
+  });
 });
 
 describe("formatCentsToBRL", () => {
