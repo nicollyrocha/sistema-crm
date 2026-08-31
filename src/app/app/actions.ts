@@ -31,7 +31,15 @@ export async function updateContact(id: string, input: ContactInput) {
   const data = contactInputSchema.parse(input);
   await db
     .update(contact)
-    .set({ ...data, updatedAt: new Date() })
+    .set({
+      name: data.name,
+      email: data.email ?? null,
+      phone: data.phone ?? null,
+      company: data.company ?? null,
+      notes: data.notes ?? null,
+      status: data.status,
+      updatedAt: new Date(),
+    })
     .where(and(eq(contact.id, id), eq(contact.userId, userId)));
   revalidatePath("/app");
 }
