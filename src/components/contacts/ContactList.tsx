@@ -28,6 +28,12 @@ export function ContactList({
 }) {
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | ContactInput["status"]>("all");
+  const [formResetKey, setFormResetKey] = useState(0);
+
+  async function handleCreate(values: ContactInput) {
+    await onCreate(values);
+    setFormResetKey((k) => k + 1);
+  }
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -46,7 +52,7 @@ export function ContactList({
   return (
     <div className="flex flex-col gap-6">
       <div className="rounded-xl border border-border bg-card p-4">
-        <ContactForm submitLabel="Adicionar contato" onSubmit={onCreate} />
+        <ContactForm key={formResetKey} submitLabel="Adicionar contato" onSubmit={handleCreate} />
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -58,7 +64,7 @@ export function ContactList({
           aria-label="Buscar contatos"
           className="sm:max-w-xs"
         />
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap gap-1" role="group" aria-label="Filtrar por status">
           {STATUS_FILTERS.map((filter) => (
             <Button
               key={filter.value}

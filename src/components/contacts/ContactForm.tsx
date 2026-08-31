@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { ContactInput } from "@/lib/validation";
 
@@ -55,29 +56,57 @@ export function ContactForm({
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-3">
       <div className="grid gap-3 sm:grid-cols-2">
-        <Input
-          placeholder="Nome"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-          maxLength={200}
-        />
-        <Input
-          placeholder="Email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Input placeholder="Telefone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-        <Input placeholder="Empresa" value={company} onChange={(e) => setCompany(e.target.value)} />
+        <div className="flex flex-col gap-1">
+          <Label htmlFor="contact-name">Nome</Label>
+          <Input
+            id="contact-name"
+            placeholder="Nome"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            maxLength={200}
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <Label htmlFor="contact-email">Email</Label>
+          <Input
+            id="contact-email"
+            placeholder="Email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <Label htmlFor="contact-phone">Telefone</Label>
+          <Input
+            id="contact-phone"
+            placeholder="Telefone"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <Label htmlFor="contact-company">Empresa</Label>
+          <Input
+            id="contact-company"
+            placeholder="Empresa"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+          />
+        </div>
       </div>
-      <Textarea
-        placeholder="Notas (opcional)"
-        value={notes}
-        onChange={(e) => setNotes(e.target.value)}
-        maxLength={2000}
-      />
-      <div className="flex flex-wrap gap-1">
+      <div className="flex flex-col gap-1">
+        <Label htmlFor="contact-notes">Notas</Label>
+        <Textarea
+          id="contact-notes"
+          placeholder="Notas (opcional)"
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          maxLength={2000}
+        />
+      </div>
+      <div className="flex flex-wrap gap-1" role="group" aria-label="Status do contato">
         {STATUS_OPTIONS.map((option) => (
           <Button
             key={option.value}
