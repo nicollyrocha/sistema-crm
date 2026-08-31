@@ -21,16 +21,27 @@ export function AvatarUploader({ currentImage, name }: { currentImage?: string |
     const formData = new FormData();
     formData.append("file", file);
 
-    const res = await fetch("/api/account/avatar", { method: "POST", body: formData });
-    const data = await res.json();
+    try {
+      const res = await fetch("/api/account/avatar", { method: "POST", body: formData });
+      let data: { url?: string; error?: string } = {};
+      try {
+        data = await res.json();
+      } catch {
+        setError("Falha ao enviar imagem. Tente novamente.");
+        return;
+      }
 
-    setUploading(false);
-    if (!res.ok) {
-      setError(data.error ?? "Falha ao enviar imagem");
-      return;
+      if (!res.ok) {
+        setError(data.error ?? "Falha ao enviar imagem");
+        return;
+      }
+      setPreview(data.url ?? null);
+      router.refresh();
+    } catch {
+      setError("Falha ao enviar imagem. Tente novamente.");
+    } finally {
+      setUploading(false);
     }
-    setPreview(data.url);
-    router.refresh();
   }
 
   return (
