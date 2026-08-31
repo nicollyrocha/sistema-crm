@@ -27,6 +27,7 @@ export async function POST(request: Request) {
   try {
     const blob = await put(`avatars/${session.user.id}-${Date.now()}`, file, {
       access: "public",
+      contentType: file.type,
     });
 
     await db.update(user).set({ image: blob.url, updatedAt: new Date() }).where(eq(user.id, session.user.id));
