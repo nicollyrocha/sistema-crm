@@ -81,7 +81,7 @@ export function ContactItem({
     >
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2">
-          <p className="break-words font-medium">{contact.name}</p>
+          <p className="min-w-0 break-words font-medium">{contact.name}</p>
           <span className="shrink-0 rounded-full border border-border px-2 py-0.5 text-xs text-muted-foreground">
             {STATUS_LABELS[contact.status] ?? contact.status}
           </span>
