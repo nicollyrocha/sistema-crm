@@ -9,7 +9,7 @@ import { ChangePasswordForm } from "@/components/account/ChangePasswordForm";
 export default async function AccountPage() {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session) {
-    redirect("/login");
+    redirect("/login?session_expired=1");
   }
   const user = session.user;
 

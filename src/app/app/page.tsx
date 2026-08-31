@@ -6,7 +6,7 @@ import { MotionCard } from "@/components/ui/motion-card";
 export default async function AppPage() {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session) {
-    redirect("/login");
+    redirect("/login?session_expired=1");
   }
 
   return (
