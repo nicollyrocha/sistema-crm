@@ -48,7 +48,7 @@ follow-up spec, once requirements for the CRM domain itself are defined.
 | `/forgot-password`  | no   | Request password reset email                                        |
 | `/reset-password`   | no   | Set new password from emailed token                                 |
 | `/app`              | yes  | Placeholder dashboard (welcome message) — CRM features land here later |
-| `/account`          | yes  | Change name, change email (with confirmation), change password, upload avatar |
+| `/account`          | yes  | Change email (with confirmation), change password, upload avatar    |
 
 Unauthenticated users hitting `/app` or `/account` are redirected to `/login`. Authenticated
 users hitting `/login` or `/signup` are redirected to `/app`.
@@ -76,10 +76,17 @@ Modern, distinctive, single coherent identity (not multiple selectable themes):
 
 ## Error Handling
 
-- Form validation (Zod) on all auth forms, client + server side
-- Server actions / API routes return typed error responses; UI surfaces inline field errors and
-  toast notifications for request-level failures
+- Auth forms rely on native HTML5 validation client-side (`required`, `type="email"`,
+  `minLength`) plus Better Auth's own server-side validation on every endpoint — no
+  project-owned Zod schemas were needed since there are no app-owned mutation endpoints beyond
+  the avatar-upload route (which does its own manual checks: file presence, image MIME type,
+  explicit SVG rejection, 5MB size limit)
+- Errors surface as inline text next to the relevant field/form (`text-destructive`), not toast
+  notifications — sufficient for this harness's single-form-per-page flows; revisit if a page
+  ever needs to report multiple concurrent async operations
 - Auth errors (invalid credentials, expired reset token, etc.) shown inline on the relevant form
+- The avatar-upload API route wraps its Blob/DB calls in try/catch and returns a generic
+  handled error instead of crashing (e.g. when `BLOB_READ_WRITE_TOKEN` isn't configured)
 
 ## Environment / Deployment
 
