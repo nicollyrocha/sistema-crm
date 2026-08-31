@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -39,6 +39,12 @@ export function ContactForm({
   const [status, setStatus] = useState<ContactInput["status"]>(initialValues?.status ?? "lead");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const formId = useId();
+  const nameId = `${formId}-name`;
+  const emailId = `${formId}-email`;
+  const phoneId = `${formId}-phone`;
+  const companyId = `${formId}-company`;
+  const notesId = `${formId}-notes`;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -57,9 +63,9 @@ export function ContactForm({
     <form onSubmit={handleSubmit} className="flex flex-col gap-3">
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="flex flex-col gap-1">
-          <Label htmlFor="contact-name">Nome</Label>
+          <Label htmlFor={nameId}>Nome</Label>
           <Input
-            id="contact-name"
+            id={nameId}
             placeholder="Nome"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -68,9 +74,9 @@ export function ContactForm({
           />
         </div>
         <div className="flex flex-col gap-1">
-          <Label htmlFor="contact-email">Email</Label>
+          <Label htmlFor={emailId}>Email</Label>
           <Input
-            id="contact-email"
+            id={emailId}
             placeholder="Email"
             type="email"
             value={email}
@@ -78,18 +84,18 @@ export function ContactForm({
           />
         </div>
         <div className="flex flex-col gap-1">
-          <Label htmlFor="contact-phone">Telefone</Label>
+          <Label htmlFor={phoneId}>Telefone</Label>
           <Input
-            id="contact-phone"
+            id={phoneId}
             placeholder="Telefone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
         </div>
         <div className="flex flex-col gap-1">
-          <Label htmlFor="contact-company">Empresa</Label>
+          <Label htmlFor={companyId}>Empresa</Label>
           <Input
-            id="contact-company"
+            id={companyId}
             placeholder="Empresa"
             value={company}
             onChange={(e) => setCompany(e.target.value)}
@@ -97,9 +103,9 @@ export function ContactForm({
         </div>
       </div>
       <div className="flex flex-col gap-1">
-        <Label htmlFor="contact-notes">Notas</Label>
+        <Label htmlFor={notesId}>Notas</Label>
         <Textarea
-          id="contact-notes"
+          id={notesId}
           placeholder="Notas (opcional)"
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
