@@ -24,6 +24,7 @@ export async function createContact(input: ContactInput) {
   const data = contactInputSchema.parse(input);
   await db.insert(contact).values({ userId, ...data });
   revalidatePath("/app/contacts");
+  revalidatePath("/app"); // Dashboard aggregates contact counts by status
 }
 
 export async function updateContact(id: string, input: ContactInput) {
@@ -42,10 +43,12 @@ export async function updateContact(id: string, input: ContactInput) {
     })
     .where(and(eq(contact.id, id), eq(contact.userId, userId)));
   revalidatePath("/app/contacts");
+  revalidatePath("/app"); // Dashboard aggregates contact counts by status
 }
 
 export async function deleteContact(id: string) {
   const userId = await requireUserId();
   await db.delete(contact).where(and(eq(contact.id, id), eq(contact.userId, userId)));
   revalidatePath("/app/contacts");
+  revalidatePath("/app"); // Dashboard aggregates contact counts by status; deleting a contact also cascade-deletes its deals
 }

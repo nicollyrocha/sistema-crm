@@ -56,6 +56,7 @@ export async function createDeal(input: DealInput) {
   await requireOwnedContact(data.contactId, userId);
   await db.insert(deal).values({ userId, ...data });
   revalidatePath("/app/deals");
+  revalidatePath("/app"); // Dashboard aggregates deal counts/value by stage
 }
 
 export async function updateDeal(id: string, input: DealInput) {
@@ -75,6 +76,7 @@ export async function updateDeal(id: string, input: DealInput) {
     })
     .where(and(eq(deal.id, id), eq(deal.userId, userId)));
   revalidatePath("/app/deals");
+  revalidatePath("/app"); // Dashboard aggregates deal counts/value by stage
 }
 
 export async function updateDealStage(id: string, stage: DealInput["stage"]) {
@@ -85,10 +87,12 @@ export async function updateDealStage(id: string, stage: DealInput["stage"]) {
     .set({ stage: parsedStage, updatedAt: new Date() })
     .where(and(eq(deal.id, id), eq(deal.userId, userId)));
   revalidatePath("/app/deals");
+  revalidatePath("/app"); // Dashboard aggregates deal counts/value by stage
 }
 
 export async function deleteDeal(id: string) {
   const userId = await requireUserId();
   await db.delete(deal).where(and(eq(deal.id, id), eq(deal.userId, userId)));
   revalidatePath("/app/deals");
+  revalidatePath("/app"); // Dashboard aggregates deal counts/value by stage
 }
