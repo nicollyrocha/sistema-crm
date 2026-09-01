@@ -23,7 +23,7 @@ export async function createContact(input: ContactInput) {
   const userId = await requireUserId();
   const data = contactInputSchema.parse(input);
   await db.insert(contact).values({ userId, ...data });
-  revalidatePath("/app");
+  revalidatePath("/app/contacts");
 }
 
 export async function updateContact(id: string, input: ContactInput) {
@@ -41,11 +41,11 @@ export async function updateContact(id: string, input: ContactInput) {
       updatedAt: new Date(),
     })
     .where(and(eq(contact.id, id), eq(contact.userId, userId)));
-  revalidatePath("/app");
+  revalidatePath("/app/contacts");
 }
 
 export async function deleteContact(id: string) {
   const userId = await requireUserId();
   await db.delete(contact).where(and(eq(contact.id, id), eq(contact.userId, userId)));
-  revalidatePath("/app");
+  revalidatePath("/app/contacts");
 }
