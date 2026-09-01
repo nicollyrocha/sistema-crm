@@ -35,7 +35,7 @@ export function DealBoard({
       {contacts.length === 0 ? (
         <div className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
           Você precisa ter pelo menos um contato antes de criar uma negociação.{" "}
-          <Link href="/app" className="text-primary underline">
+          <Link href="/app/contacts" className="text-primary underline">
             Adicionar contato
           </Link>
         </div>

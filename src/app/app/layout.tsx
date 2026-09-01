@@ -9,6 +9,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           Sistema CRM
         </Link>
         <div className="flex items-center gap-4">
+          <Link href="/app/contacts" className="text-sm text-muted-foreground hover:text-foreground">
+            Contatos
+          </Link>
           <Link href="/app/deals" className="text-sm text-muted-foreground hover:text-foreground">
             Funil
           </Link>
