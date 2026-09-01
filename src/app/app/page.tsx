@@ -9,7 +9,7 @@ import { getContactStats, getDealStats } from "./dashboard-data";
 export default async function DashboardPage() {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session) {
-    redirect("/login?session_expired=1");
+    redirect("/login");
   }
 
   const [contactStats, dealStats] = await Promise.all([getContactStats(), getDealStats()]);

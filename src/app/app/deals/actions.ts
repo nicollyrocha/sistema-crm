@@ -1,18 +1,11 @@
 "use server";
 
-import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { and, desc, eq } from "drizzle-orm";
-import { auth } from "@/lib/auth";
 import { db } from "@/db";
 import { deal, contact } from "@/db/schema";
 import { dealInputSchema, type DealInput } from "@/lib/validation";
-
-async function requireUserId() {
-  const session = await auth.api.getSession({ headers: await headers() });
-  if (!session) throw new Error("Não autenticado");
-  return session.user.id;
-}
+import { requireUserId } from "@/lib/session";
 
 async function requireOwnedContact(contactId: string, userId: string) {
   const rows = await db

@@ -7,7 +7,7 @@ import { listContacts, createContact, updateContact, deleteContact } from "./act
 export default async function AppPage() {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session) {
-    redirect("/login?session_expired=1");
+    redirect("/login");
   }
 
   const contacts = await listContacts();

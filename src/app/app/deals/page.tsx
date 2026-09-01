@@ -7,7 +7,7 @@ import { listDeals, listContactsForPicker, createDeal, updateDeal, updateDealSta
 export default async function DealsPage() {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session) {
-    redirect("/login?session_expired=1");
+    redirect("/login");
   }
 
   const [deals, contacts] = await Promise.all([listDeals(), listContactsForPicker()]);

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
+import { useDeleteConfirm, DeleteConfirmButtons } from "@/components/ui/delete-confirm";
 import { DealForm, type ContactOption } from "./DealForm";
 import { DEAL_STAGES } from "@/lib/deal-stages";
 import { formatCentsToBRL } from "@/lib/currency";
@@ -34,9 +35,14 @@ export function DealCard({
   onDelete: (id: string) => Promise<void>;
 }) {
   const [editing, setEditing] = useState(false);
-  const [confirmingDelete, setConfirmingDelete] = useState(false);
-  const [deleteError, setDeleteError] = useState<string | null>(null);
-  const [deleting, setDeleting] = useState(false);
+  const {
+    confirming: confirmingDelete,
+    deleting,
+    error: deleteError,
+    requestDelete,
+    cancelDelete,
+    handleDelete,
+  } = useDeleteConfirm(() => onDelete(deal.id), "Não foi possível excluir a negociação.");
   const [stageError, setStageError] = useState<string | null>(null);
 
   if (editing) {
@@ -61,18 +67,6 @@ export function DealCard({
         />
       </li>
     );
-  }
-
-  async function handleDelete() {
-    setDeleteError(null);
-    setDeleting(true);
-    try {
-      await onDelete(deal.id);
-    } catch {
-      setDeleteError("Não foi possível excluir a negociação.");
-      setDeleting(false);
-      setConfirmingDelete(false);
-    }
   }
 
   async function handleStageChange(newStage: string) {
@@ -116,20 +110,13 @@ export function DealCard({
         <Button size="sm" variant="ghost" onClick={() => setEditing(true)}>
           Editar
         </Button>
-        {confirmingDelete ? (
-          <>
-            <Button size="sm" variant="destructive" disabled={deleting} onClick={handleDelete}>
-              {deleting ? "Excluindo..." : "Confirmar"}
-            </Button>
-            <Button size="sm" variant="ghost" disabled={deleting} onClick={() => setConfirmingDelete(false)}>
-              Cancelar
-            </Button>
-          </>
-        ) : (
-          <Button size="sm" variant="ghost" onClick={() => setConfirmingDelete(true)}>
-            Excluir
-          </Button>
-        )}
+        <DeleteConfirmButtons
+          confirming={confirmingDelete}
+          deleting={deleting}
+          onRequest={requestDelete}
+          onConfirm={handleDelete}
+          onCancel={cancelDelete}
+        />
       </div>
     </motion.li>
   );

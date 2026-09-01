@@ -78,6 +78,15 @@ describe("dealInputSchema", () => {
     if (result.success) expect(result.data.value).toBe(150000);
   });
 
+  it("rejects a value above the Postgres int4 range", () => {
+    const result = dealInputSchema.safeParse({
+      title: "Contrato Acme",
+      contactId: validContactId,
+      value: 2_147_483_648,
+    });
+    expect(result.success).toBe(false);
+  });
+
   it("rejects an invalid stage", () => {
     const result = dealInputSchema.safeParse({ title: "Contrato Acme", contactId: validContactId, stage: "closed" });
     expect(result.success).toBe(false);
@@ -112,5 +121,14 @@ describe("dealInputSchema", () => {
     });
     expect(result.success).toBe(true);
     if (result.success) expect(result.data.expectedCloseDate).toBe("2026-09-15");
+  });
+
+  it("rejects a calendar-invalid expectedCloseDate", () => {
+    const result = dealInputSchema.safeParse({
+      title: "Contrato Acme",
+      contactId: validContactId,
+      expectedCloseDate: "2026-02-30",
+    });
+    expect(result.success).toBe(false);
   });
 });

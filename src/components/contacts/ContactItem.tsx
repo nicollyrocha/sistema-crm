@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { useDeleteConfirm, DeleteConfirmButtons } from "@/components/ui/delete-confirm";
 import { ContactForm } from "./ContactForm";
 import type { ContactInput } from "@/lib/validation";
 
@@ -32,9 +33,14 @@ export function ContactItem({
   onDelete: (id: string) => Promise<void>;
 }) {
   const [editing, setEditing] = useState(false);
-  const [confirmingDelete, setConfirmingDelete] = useState(false);
-  const [deleteError, setDeleteError] = useState<string | null>(null);
-  const [deleting, setDeleting] = useState(false);
+  const {
+    confirming: confirmingDelete,
+    deleting,
+    error: deleteError,
+    requestDelete,
+    cancelDelete,
+    handleDelete,
+  } = useDeleteConfirm(() => onDelete(contact.id), "Não foi possível excluir o contato.");
 
   if (editing) {
     return (
@@ -57,18 +63,6 @@ export function ContactItem({
         />
       </li>
     );
-  }
-
-  async function handleDelete() {
-    setDeleteError(null);
-    setDeleting(true);
-    try {
-      await onDelete(contact.id);
-    } catch {
-      setDeleteError("Não foi possível excluir o contato.");
-      setDeleting(false);
-      setConfirmingDelete(false);
-    }
   }
 
   return (
@@ -98,20 +92,13 @@ export function ContactItem({
         <Button size="sm" variant="ghost" onClick={() => setEditing(true)}>
           Editar
         </Button>
-        {confirmingDelete ? (
-          <>
-            <Button size="sm" variant="destructive" disabled={deleting} onClick={handleDelete}>
-              {deleting ? "Excluindo..." : "Confirmar"}
-            </Button>
-            <Button size="sm" variant="ghost" disabled={deleting} onClick={() => setConfirmingDelete(false)}>
-              Cancelar
-            </Button>
-          </>
-        ) : (
-          <Button size="sm" variant="ghost" onClick={() => setConfirmingDelete(true)}>
-            Excluir
-          </Button>
-        )}
+        <DeleteConfirmButtons
+          confirming={confirmingDelete}
+          deleting={deleting}
+          onRequest={requestDelete}
+          onConfirm={handleDelete}
+          onCancel={cancelDelete}
+        />
       </div>
     </motion.li>
   );

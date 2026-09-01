@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean, uuid, integer, date } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, uuid, integer, date, index } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -51,34 +51,42 @@ export const verification = pgTable("verification", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-export const contact = pgTable("contact", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
-  name: text("name").notNull(),
-  email: text("email"),
-  phone: text("phone"),
-  company: text("company"),
-  notes: text("notes"),
-  status: text("status").notNull().default("lead"),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-});
+export const contact = pgTable(
+  "contact",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    email: text("email"),
+    phone: text("phone"),
+    company: text("company"),
+    notes: text("notes"),
+    status: text("status").notNull().default("lead"),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  },
+  (table) => [index("contact_user_id_idx").on(table.userId)]
+);
 
-export const deal = pgTable("deal", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
-  contactId: uuid("contact_id")
-    .notNull()
-    .references(() => contact.id, { onDelete: "cascade" }),
-  title: text("title").notNull(),
-  value: integer("value"),
-  expectedCloseDate: date("expected_close_date"),
-  notes: text("notes"),
-  stage: text("stage").notNull().default("prospecting"),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-});
+export const deal = pgTable(
+  "deal",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    contactId: uuid("contact_id")
+      .notNull()
+      .references(() => contact.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    value: integer("value"),
+    expectedCloseDate: date("expected_close_date"),
+    notes: text("notes"),
+    stage: text("stage").notNull().default("prospecting"),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  },
+  (table) => [index("deal_user_id_idx").on(table.userId), index("deal_contact_id_idx").on(table.contactId)]
+);

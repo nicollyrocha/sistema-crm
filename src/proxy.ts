@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
+import { auth } from "@/lib/auth";
 
 const PROTECTED_ROUTES = ["/app", "/account"];
 const AUTH_ROUTES = ["/login", "/signup", "/forgot-password", "/reset-password"];
@@ -23,33 +24,35 @@ function resolveSessionCookieName(request: NextRequest): string | undefined {
   return SESSION_COOKIE_NAME_CANDIDATES.find((name) => request.cookies.has(name));
 }
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const sessionCookie = getSessionCookie(request);
-  const { pathname, searchParams } = request.nextUrl;
+  const { pathname } = request.nextUrl;
 
   const isProtected = PROTECTED_ROUTES.some((route) => pathname.startsWith(route));
   const isAuthRoute = AUTH_ROUTES.some((route) => pathname.startsWith(route));
-  const sessionExpired = searchParams.get("session_expired") === "1";
 
   if (isProtected && !sessionCookie) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
-  // A `session_expired=1` marker means a Server Component just did a real
-  // DB lookup and found the cookie stale (see /app and /account). Skip the
-  // bounce back to /app so the stale cookie below can actually be cleared,
-  // instead of looping forever between /login and /app.
-  if (isAuthRoute && sessionCookie && !sessionExpired) {
-    return NextResponse.redirect(new URL("/app", request.url));
-  }
 
-  const response = NextResponse.next();
-  if (sessionExpired) {
+  if (isAuthRoute && sessionCookie) {
+    // The cookie's mere presence doesn't prove it's still valid (it may be
+    // stale, e.g. after a password change) — verify server-side rather than
+    // trusting a client-suppliable signal, so a visit to this URL can't be
+    // used to force-clear someone else's still-valid session.
+    const session = await auth.api.getSession({ headers: request.headers });
+    if (session) {
+      return NextResponse.redirect(new URL("/app", request.url));
+    }
+    const response = NextResponse.next();
     const staleCookieName = resolveSessionCookieName(request);
     if (staleCookieName) {
       response.cookies.delete(staleCookieName);
     }
+    return response;
   }
-  return response;
+
+  return NextResponse.next();
 }
 
 export const config = {

@@ -34,9 +34,21 @@ describe("parseCurrencyToCents", () => {
     expect(parseCurrencyToCents("1,500.00")).toBe(150000);
   });
 
+  it("parses a bare Brazilian thousands amount with no decimal part", () => {
+    expect(parseCurrencyToCents("1.500")).toBe(150000);
+  });
+
+  it("parses a decimal-only dot amount as decimal, not thousands", () => {
+    expect(parseCurrencyToCents("1.50")).toBe(150);
+  });
+
   it("parses an amount with multiple thousands groups in either format", () => {
     expect(parseCurrencyToCents("1,234,567.89")).toBe(123456789);
     expect(parseCurrencyToCents("1.234.567,89")).toBe(123456789);
+  });
+
+  it("returns undefined for malformed input with trailing garbage", () => {
+    expect(parseCurrencyToCents("10-5")).toBeUndefined();
   });
 });
 

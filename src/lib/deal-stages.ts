@@ -7,3 +7,5 @@ export const DEAL_STAGES: { value: DealInput["stage"]; label: string }[] = [
   { value: "won", label: "Ganho" },
   { value: "lost", label: "Perdido" },
 ];
+
+export const CLOSED_STAGES = ["won", "lost"] as const;
