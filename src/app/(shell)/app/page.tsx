@@ -31,7 +31,7 @@ export default async function DashboardPage() {
       <section className="flex flex-col gap-3">
         <h2 className="text-sm font-semibold text-muted-foreground">Negociações em aberto</h2>
         <div className="grid gap-3 sm:grid-cols-2">
-          <StatCard label="Negociações abertas" value={String(dealStats.openCount)} />
+          <StatCard label="Negociações abertas" value={String(dealStats.openCount)} accent="secondary" />
           <StatCard label="Valor em aberto" value={formatCentsToBRL(dealStats.openValue)} />
         </div>
       </section>
