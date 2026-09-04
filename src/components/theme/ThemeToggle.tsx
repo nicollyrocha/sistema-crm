@@ -10,6 +10,10 @@ export function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
 
   useLayoutEffect(() => {
+    // Deliberately syncing to a DOM-driven value (whether we've mounted) so the
+    // first client render matches SSR — not derivable from props/state, so this
+    // isn't the anti-pattern the rule is meant to catch.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
