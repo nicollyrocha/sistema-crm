@@ -3,7 +3,7 @@ import { buttonVariants } from "@/components/ui/button";
 
 export function Hero() {
   return (
-    <section className="mx-auto max-w-5xl px-6 py-24 text-center">
+    <section className="mx-auto max-w-7xl px-6 py-24 text-center lg:px-12">
       <h1 className="bg-gradient-to-br from-foreground to-primary bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-6xl">
         Seus clientes, organizados em um só lugar.
       </h1>

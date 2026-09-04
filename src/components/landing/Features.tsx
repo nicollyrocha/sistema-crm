@@ -6,9 +6,9 @@ const FEATURES = [
 
 export function Features() {
   return (
-    <section className="mx-auto grid max-w-5xl gap-6 px-6 py-16 sm:grid-cols-3">
+    <section className="mx-auto grid max-w-7xl gap-6 px-6 py-16 sm:grid-cols-3 lg:px-12">
       {FEATURES.map((feature) => (
-        <div key={feature.title} className="rounded-2xl border border-border bg-card p-6">
+        <div key={feature.title} className="surface-card p-6">
           <h3 className="text-lg font-semibold">{feature.title}</h3>
           <p className="mt-2 text-sm text-muted-foreground">{feature.description}</p>
         </div>
