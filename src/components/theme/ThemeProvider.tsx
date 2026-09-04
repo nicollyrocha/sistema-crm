@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useLayoutEffect, useState, type ReactNode } from "react";
 import { applyTheme, getStoredTheme, getSystemTheme, THEME_STORAGE_KEY, type Theme } from "@/lib/theme";
 
 type ThemeContextValue = { theme: Theme; setTheme: (theme: Theme) => void };
@@ -10,7 +10,7 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(() => getStoredTheme() ?? getSystemTheme());
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     applyTheme(theme);
   }, [theme]);
 
