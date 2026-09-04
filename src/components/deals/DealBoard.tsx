@@ -33,14 +33,14 @@ export function DealBoard({
   return (
     <div className="flex flex-col gap-6">
       {contacts.length === 0 ? (
-        <div className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
+        <div className="surface-card p-4 text-sm text-muted-foreground">
           Você precisa ter pelo menos um contato antes de criar uma negociação.{" "}
           <Link href="/app/contacts" className="text-primary underline">
             Adicionar contato
           </Link>
         </div>
       ) : (
-        <div className="rounded-xl border border-border bg-card p-4">
+        <div className="surface-card p-4">
           <DealForm
             key={formResetKey}
             contacts={contacts}
@@ -50,11 +50,11 @@ export function DealBoard({
         </div>
       )}
 
-      <div className="flex gap-4 overflow-x-auto pb-2">
+      <div className="flex gap-4 overflow-x-auto pb-2 xl:grid xl:grid-cols-5 xl:overflow-visible">
         {DEAL_STAGES.map((stageDef) => {
           const dealsInStage = initialDeals.filter((d) => d.stage === stageDef.value);
           return (
-            <div key={stageDef.value} className="flex w-72 shrink-0 flex-col gap-3">
+            <div key={stageDef.value} className="flex w-72 shrink-0 flex-col gap-3 xl:w-auto xl:shrink">
               <h2 className="text-sm font-semibold text-muted-foreground">
                 {stageDef.label} ({dealsInStage.length})
               </h2>

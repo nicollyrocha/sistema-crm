@@ -51,7 +51,7 @@ export function ContactList({
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="rounded-xl border border-border bg-card p-4">
+      <div className="surface-card p-4">
         <ContactForm key={formResetKey} submitLabel="Adicionar contato" onSubmit={handleCreate} />
       </div>
 
@@ -86,7 +86,7 @@ export function ContactList({
             : "Nenhum contato encontrado."}
         </p>
       ) : (
-        <ul className="flex flex-col gap-3">
+        <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           <AnimatePresence initial={false}>
             {filtered.map((contact) => (
               <ContactItem key={contact.id} contact={contact} onUpdate={onUpdate} onDelete={onDelete} />

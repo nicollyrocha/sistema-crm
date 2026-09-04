@@ -47,7 +47,7 @@ export function DealCard({
 
   if (editing) {
     return (
-      <li className="rounded-xl border border-border bg-card p-4">
+      <li className="surface-card p-4">
         <DealForm
           contacts={contacts}
           initialValues={{
@@ -84,7 +84,7 @@ export function DealCard({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
-      className="flex flex-col gap-2 rounded-xl border border-border bg-card p-4"
+      className="surface-card flex flex-col gap-2 p-4"
     >
       <p className="min-w-0 break-words font-medium">{deal.title}</p>
       <p className="min-w-0 break-words text-sm text-muted-foreground">{deal.contactName}</p>
