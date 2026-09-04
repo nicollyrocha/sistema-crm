@@ -31,15 +31,15 @@ export function SignupForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2.5">
         <Label htmlFor="name">Nome</Label>
         <Input id="name" required value={name} onChange={(e) => setName(e.target.value)} />
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2.5">
         <Label htmlFor="email">Email</Label>
         <Input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2.5">
         <Label htmlFor="password">Senha</Label>
         <Input id="password" type="password" required minLength={8} value={password} onChange={(e) => setPassword(e.target.value)} />
       </div>

@@ -62,7 +62,7 @@ export function ContactForm({
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-3">
       <div className="grid gap-3 sm:grid-cols-2">
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-2.5">
           <Label htmlFor={nameId}>Nome</Label>
           <Input
             id={nameId}
@@ -73,7 +73,7 @@ export function ContactForm({
             maxLength={200}
           />
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-2.5">
           <Label htmlFor={emailId}>Email</Label>
           <Input
             id={emailId}
@@ -83,7 +83,7 @@ export function ContactForm({
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-2.5">
           <Label htmlFor={phoneId}>Telefone</Label>
           <Input
             id={phoneId}
@@ -92,7 +92,7 @@ export function ContactForm({
             onChange={(e) => setPhone(e.target.value)}
           />
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-2.5">
           <Label htmlFor={companyId}>Empresa</Label>
           <Input
             id={companyId}
@@ -102,7 +102,7 @@ export function ContactForm({
           />
         </div>
       </div>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2.5">
         <Label htmlFor={notesId}>Notas</Label>
         <Textarea
           id={notesId}

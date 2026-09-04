@@ -38,7 +38,7 @@ export function ResetPasswordForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2.5">
         <Label htmlFor="password">Nova senha</Label>
         <Input id="password" type="password" required minLength={8} value={password} onChange={(e) => setPassword(e.target.value)} />
       </div>

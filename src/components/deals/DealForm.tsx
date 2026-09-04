@@ -72,11 +72,11 @@ export function DealForm({
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-3">
       <div className="grid gap-3 sm:grid-cols-2">
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-2.5">
           <Label htmlFor={titleId}>Título</Label>
           <Input id={titleId} value={title} onChange={(e) => setTitle(e.target.value)} required maxLength={200} />
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-2.5">
           <Label htmlFor={contactSelectId}>Contato</Label>
           <Select
             id={contactSelectId}
@@ -91,11 +91,11 @@ export function DealForm({
             ))}
           </Select>
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-2.5">
           <Label htmlFor={valueId}>Valor (R$)</Label>
           <Input id={valueId} placeholder="0,00" value={value} onChange={(e) => setValue(e.target.value)} />
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-2.5">
           <Label htmlFor={dateId}>Previsão de fechamento</Label>
           <Input
             id={dateId}
@@ -105,7 +105,7 @@ export function DealForm({
           />
         </div>
       </div>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2.5">
         <Label htmlFor={notesId}>Notas</Label>
         <Textarea
           id={notesId}

@@ -28,8 +28,10 @@ export function ChangeEmailForm({ currentEmail }: { currentEmail: string }) {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-      <Label htmlFor="new-email">Email</Label>
-      <Input id="new-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+      <div className="flex flex-col gap-2.5">
+        <Label htmlFor="new-email">Email</Label>
+        <Input id="new-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+      </div>
       {message && <p className="text-sm text-muted-foreground">{message}</p>}
       {error && <p className="text-sm text-destructive">{error}</p>}
       <Button type="submit" disabled={loading || email === currentEmail}>

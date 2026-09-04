@@ -16,19 +16,19 @@ export default async function AccountPage() {
     <div className="flex flex-col gap-8">
       <h1 className="text-2xl font-semibold">Minha conta</h1>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <section className="surface-card p-6">
-          <h2 className="mb-4 text-lg font-medium">Foto de perfil</h2>
+      <div className="grid gap-8 lg:grid-cols-2">
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">Foto de perfil</h2>
           <AvatarUploader currentImage={user.image} name={user.name} />
         </section>
 
-        <section className="surface-card p-6">
-          <h2 className="mb-4 text-lg font-medium">Email</h2>
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">Email</h2>
           <ChangeEmailForm currentEmail={user.email} />
         </section>
 
-        <section className="surface-card p-6 lg:col-span-2">
-          <h2 className="mb-4 text-lg font-medium">Senha</h2>
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">Senha</h2>
           <ChangePasswordForm />
         </section>
       </div>
