@@ -20,7 +20,7 @@ function NavLinks({ pathname, onNavigate }: { pathname: string; onNavigate?: () 
   return (
     <nav className="flex flex-col gap-1">
       {NAV_LINKS.map(({ href, label, icon: Icon }) => {
-        const active = href === "/app" ? pathname === "/app" : pathname.startsWith(href);
+        const active = href === "/app" ? pathname === "/app" : pathname === href || pathname.startsWith(`${href}/`);
         return (
           <Link
             key={href}
