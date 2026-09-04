@@ -16,20 +16,35 @@ export default async function AccountPage() {
     <div className="flex flex-col gap-8">
       <h1 className="text-2xl font-semibold">Minha conta</h1>
 
-      <div className="grid gap-8 lg:grid-cols-2">
-        <section className="flex flex-col gap-4">
-          <h2 className="text-lg font-medium">Foto de perfil</h2>
-          <AvatarUploader currentImage={user.image} name={user.name} />
+      <div className="flex flex-col">
+        <section className="grid gap-4 border-b border-border py-6 first:pt-0 lg:grid-cols-[240px_1fr] lg:gap-12">
+          <div>
+            <h2 className="text-base font-medium">Foto de perfil</h2>
+            <p className="mt-1 text-sm text-muted-foreground">Uma imagem para identificar sua conta.</p>
+          </div>
+          <div className="max-w-md">
+            <AvatarUploader currentImage={user.image} name={user.name} />
+          </div>
         </section>
 
-        <section className="flex flex-col gap-4">
-          <h2 className="text-lg font-medium">Email</h2>
-          <ChangeEmailForm currentEmail={user.email} />
+        <section className="grid gap-4 border-b border-border py-6 lg:grid-cols-[240px_1fr] lg:gap-12">
+          <div>
+            <h2 className="text-base font-medium">Email</h2>
+            <p className="mt-1 text-sm text-muted-foreground">O email usado para entrar e receber notificações.</p>
+          </div>
+          <div className="max-w-md">
+            <ChangeEmailForm currentEmail={user.email} />
+          </div>
         </section>
 
-        <section className="flex flex-col gap-4">
-          <h2 className="text-lg font-medium">Senha</h2>
-          <ChangePasswordForm />
+        <section className="grid gap-4 py-6 lg:grid-cols-[240px_1fr] lg:gap-12">
+          <div>
+            <h2 className="text-base font-medium">Senha</h2>
+            <p className="mt-1 text-sm text-muted-foreground">Recomendamos usar uma senha forte e exclusiva.</p>
+          </div>
+          <div className="max-w-md">
+            <ChangePasswordForm />
+          </div>
         </section>
       </div>
     </div>
