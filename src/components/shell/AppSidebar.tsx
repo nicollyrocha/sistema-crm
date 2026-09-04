@@ -55,7 +55,7 @@ export function AppSidebar() {
         <button
           type="button"
           aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
-          className={buttonVariants({ variant: "ghost", size: "icon-sm" })}
+          className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }))}
           onClick={() => setMobileOpen((open) => !open)}
         >
           {mobileOpen ? <X className="size-4" /> : <Menu className="size-4" />}

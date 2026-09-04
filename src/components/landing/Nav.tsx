@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { cn } from "@/lib/utils";
 
 export function Nav() {
   return (
@@ -11,7 +12,7 @@ export function Nav() {
         <Link href="/login" className="text-sm text-muted-foreground hover:text-foreground">
           Entrar
         </Link>
-        <Link href="/signup" className={buttonVariants({ size: "sm" })}>
+        <Link href="/signup" className={cn(buttonVariants({ size: "sm" }))}>
           Criar conta grátis
         </Link>
       </nav>

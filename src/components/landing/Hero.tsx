@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export function Hero() {
   return (
@@ -12,10 +13,10 @@ export function Hero() {
         o seu negócio.
       </p>
       <div className="mt-8 flex justify-center gap-3">
-        <Link href="/signup" className={buttonVariants({ size: "lg" })}>
+        <Link href="/signup" className={cn(buttonVariants({ size: "lg" }))}>
           Começar agora
         </Link>
-        <Link href="/login" className={buttonVariants({ size: "lg", variant: "outline" })}>
+        <Link href="/login" className={cn(buttonVariants({ size: "lg", variant: "outline" }))}>
           Já tenho conta
         </Link>
       </div>
