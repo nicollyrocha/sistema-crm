@@ -13,16 +13,16 @@ export default function SignupPage() {
         <ThemeToggle />
       </div>
       <div className="flex flex-1 items-center justify-center p-6">
-      <MotionCard className="surface-card w-full max-w-sm p-8">
-        <h1 className="mb-6 text-2xl font-semibold">Criar conta</h1>
-        <SignupForm />
-        <p className="mt-6 text-sm text-muted-foreground">
-          Já tem conta?{" "}
-          <Link href="/login" className="text-primary underline">
-            Entrar
-          </Link>
-        </p>
-      </MotionCard>
+        <MotionCard className="surface-card w-full max-w-sm p-8">
+          <h1 className="mb-6 text-2xl font-semibold">Criar conta</h1>
+          <SignupForm />
+          <p className="mt-6 text-sm text-muted-foreground">
+            Já tem conta?{" "}
+            <Link href="/login" className="text-primary underline">
+              Entrar
+            </Link>
+          </p>
+        </MotionCard>
       </div>
     </main>
   );

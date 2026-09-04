@@ -14,12 +14,12 @@ export default function ResetPasswordPage() {
         <ThemeToggle />
       </div>
       <div className="flex flex-1 items-center justify-center p-6">
-      <MotionCard className="surface-card w-full max-w-sm p-8">
-        <h1 className="mb-6 text-2xl font-semibold">Redefinir senha</h1>
-        <Suspense fallback={null}>
-          <ResetPasswordForm />
-        </Suspense>
-      </MotionCard>
+        <MotionCard className="surface-card w-full max-w-sm p-8">
+          <h1 className="mb-6 text-2xl font-semibold">Redefinir senha</h1>
+          <Suspense fallback={null}>
+            <ResetPasswordForm />
+          </Suspense>
+        </MotionCard>
       </div>
     </main>
   );

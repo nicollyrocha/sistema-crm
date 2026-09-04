@@ -13,10 +13,10 @@ export default function ForgotPasswordPage() {
         <ThemeToggle />
       </div>
       <div className="flex flex-1 items-center justify-center p-6">
-      <MotionCard className="surface-card w-full max-w-sm p-8">
-        <h1 className="mb-6 text-2xl font-semibold">Esqueci minha senha</h1>
-        <ForgotPasswordForm />
-      </MotionCard>
+        <MotionCard className="surface-card w-full max-w-sm p-8">
+          <h1 className="mb-6 text-2xl font-semibold">Esqueci minha senha</h1>
+          <ForgotPasswordForm />
+        </MotionCard>
       </div>
     </main>
   );
