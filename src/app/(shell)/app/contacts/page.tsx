@@ -22,7 +22,8 @@ export default async function AppPage() {
   const [contacts, token] = await Promise.all([listContacts(), getOrCreateFormToken()]);
 
   const host = headersList.get("host");
-  const protocol = host?.startsWith("localhost") ? "http" : "https";
+  const forwardedProto = headersList.get("x-forwarded-proto");
+  const protocol = forwardedProto ?? (host?.startsWith("localhost") ? "http" : "https");
   const baseUrl = `${protocol}://${host}`;
 
   return (

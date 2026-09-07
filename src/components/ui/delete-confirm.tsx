@@ -13,12 +13,10 @@ export function useDeleteConfirm(onDelete: () => Promise<void>, errorMessage: st
     setDeleting(true);
     try {
       await onDelete();
-      setConfirming(false);
     } catch {
       setError(errorMessage);
-      setConfirming(false);
-    } finally {
       setDeleting(false);
+      setConfirming(false);
     }
   }
 
