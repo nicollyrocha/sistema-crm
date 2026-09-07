@@ -106,5 +106,5 @@ export const leadFormSubmissionLog = pgTable(
     ip: text("ip").notNull(),
     submittedAt: timestamp("submitted_at").notNull().defaultNow(),
   },
-  (table) => [index("lead_form_submission_log_ip_idx").on(table.ip)]
+  (table) => [index("lead_form_submission_log_ip_idx").on(table.ip, table.submittedAt)]
 );
