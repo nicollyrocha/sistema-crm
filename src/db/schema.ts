@@ -90,3 +90,21 @@ export const deal = pgTable(
   },
   (table) => [index("deal_user_id_idx").on(table.userId), index("deal_contact_id_idx").on(table.contactId)]
 );
+
+export const leadFormToken = pgTable("lead_form_token", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => user.id, { onDelete: "cascade" }),
+  token: text("token").notNull().unique(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export const leadFormSubmissionLog = pgTable(
+  "lead_form_submission_log",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    ip: text("ip").notNull(),
+    submittedAt: timestamp("submitted_at").notNull().defaultNow(),
+  },
+  (table) => [index("lead_form_submission_log_ip_idx").on(table.ip)]
+);
