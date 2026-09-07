@@ -38,6 +38,9 @@ export type DealStats = {
   openCount: number;
   openValue: number;
   byStage: DealStageStat[];
+  wonCount: number;
+  lostCount: number;
+  winRate: number | null; // null when there are no closed deals yet — never show 0% or NaN in that case
 };
 
 export async function getDealStats(): Promise<DealStats> {
@@ -72,5 +75,9 @@ export async function getDealStats(): Promise<DealStats> {
     }
   }
 
-  return { openCount, openValue, byStage };
+  const wonCount = byStage.find((s) => s.stage === "won")?.count ?? 0;
+  const lostCount = byStage.find((s) => s.stage === "lost")?.count ?? 0;
+  const winRate = wonCount + lostCount === 0 ? null : Math.round((wonCount / (wonCount + lostCount)) * 100);
+
+  return { openCount, openValue, byStage, wonCount, lostCount, winRate };
 }
