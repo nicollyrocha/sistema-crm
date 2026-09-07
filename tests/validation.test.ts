@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { contactInputSchema, dealInputSchema } from "@/lib/validation";
+import { contactInputSchema, dealInputSchema, leadFormInputSchema } from "@/lib/validation";
 
 describe("contactInputSchema", () => {
   it("accepts a valid contact with only a name", () => {
@@ -130,5 +130,49 @@ describe("dealInputSchema", () => {
       expectedCloseDate: "2026-02-30",
     });
     expect(result.success).toBe(false);
+  });
+});
+
+describe("leadFormInputSchema", () => {
+  it("accepts a valid submission with only a name", () => {
+    const result = leadFormInputSchema.safeParse({ name: "Maria Silva" });
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects an empty name", () => {
+    const result = leadFormInputSchema.safeParse({ name: "   " });
+    expect(result.success).toBe(false);
+  });
+
+  it("rejects an invalid email", () => {
+    const result = leadFormInputSchema.safeParse({ name: "Maria", email: "not-an-email" });
+    expect(result.success).toBe(false);
+  });
+
+  it("treats an empty-string email as undefined", () => {
+    const result = leadFormInputSchema.safeParse({ name: "Maria", email: "" });
+    expect(result.success).toBe(true);
+    if (result.success) expect(result.data.email).toBeUndefined();
+  });
+
+  it("treats empty-string optional fields as undefined", () => {
+    const result = leadFormInputSchema.safeParse({
+      name: "Maria",
+      phone: "",
+      company: "",
+      notes: "",
+    });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.phone).toBeUndefined();
+      expect(result.data.company).toBeUndefined();
+      expect(result.data.notes).toBeUndefined();
+    }
+  });
+
+  it("does not accept a status field (the public form cannot set it)", () => {
+    const result = leadFormInputSchema.safeParse({ name: "Maria", status: "active" });
+    expect(result.success).toBe(true);
+    if (result.success) expect("status" in result.data).toBe(false);
   });
 });
