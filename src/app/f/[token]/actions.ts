@@ -26,13 +26,15 @@ export async function submitLeadForm(token: string, input: LeadFormSubmission): 
   }
 
   // Honeypot: a hidden field real visitors never fill in. Pretend success so
-  // a bot doesn't learn it was caught, but create nothing.
-  if (input.website.trim() !== "") {
+  // a bot doesn't learn it was caught, but create nothing. Guard the type
+  // since this is a network boundary — the input isn't guaranteed to match
+  // the TS type at runtime.
+  if (typeof input.website === "string" && input.website.trim() !== "") {
     return { ok: true };
   }
 
   const headersList = await headers();
-  const ip = headersList.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  const ip = headersList.get("x-real-ip") ?? headersList.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
 
   const recentSubmissions = await db
     .select({ submittedAt: leadFormSubmissionLog.submittedAt })
@@ -54,7 +56,7 @@ export async function submitLeadForm(token: string, input: LeadFormSubmission): 
     return { ok: false, error: parsed.error.issues[0]?.message ?? "Dados inválidos." };
   }
 
-  await db.insert(contact).values({ userId: tokenRow.userId, status: "lead", ...parsed.data });
+  await db.insert(contact).values({ ...parsed.data, userId: tokenRow.userId, status: "lead" });
   revalidatePath("/app/contacts");
   return { ok: true };
 }
