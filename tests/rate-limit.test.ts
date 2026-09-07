@@ -27,6 +27,16 @@ describe("isRateLimited", () => {
     expect(isRateLimited(timestamps, now)).toBe(true);
   });
 
+  it("returns false when just under the limit within the window", () => {
+    const timestamps = [
+      new Date("2026-09-07T11:10:00Z"),
+      new Date("2026-09-07T11:20:00Z"),
+      new Date("2026-09-07T11:30:00Z"),
+      new Date("2026-09-07T11:40:00Z"),
+    ];
+    expect(isRateLimited(timestamps, now)).toBe(false);
+  });
+
   it("ignores submissions older than the one-hour window", () => {
     const timestamps = [
       new Date("2026-09-07T10:00:00Z"), // 2 hours ago — outside window
