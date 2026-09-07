@@ -33,6 +33,12 @@ export async function submitLeadForm(token: string, input: LeadFormSubmission): 
     return { ok: true };
   }
 
+  // Trust assumption: this app runs on Vercel, whose edge network sets both
+  // x-real-ip and x-forwarded-for to the actual connecting client IP and does
+  // not forward a client-supplied value for either — see
+  // https://vercel.com/docs/headers/request-headers. If this app is ever put
+  // behind another proxy/CDN in front of Vercel, re-verify which header (if
+  // any) is still safe to trust before relying on it for rate limiting.
   const headersList = await headers();
   const ip = headersList.get("x-real-ip") ?? headersList.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
 
